@@ -42,7 +42,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from conduit_sdk.models.common import Message, MessageRole
 
-
 # ===========================================================================
 # Shared bases
 # ===========================================================================

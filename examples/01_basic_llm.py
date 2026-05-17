@@ -16,7 +16,7 @@ from collections.abc import AsyncIterator
 from conduit_sdk.clients import LLMClient
 from conduit_sdk.core.config import ClientConfig, CostConfig
 from conduit_sdk.models.common import Message, MessageRole, Usage
-from conduit_sdk.models.requests import LLMRequest, LLMRequestBuilder
+from conduit_sdk.models.requests import LLMRequest
 from conduit_sdk.models.responses import FinishReason, LLMResponse
 
 # ---------------------------------------------------------------------------

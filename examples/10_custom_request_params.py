@@ -15,14 +15,11 @@ import asyncio
 from collections.abc import AsyncIterator
 from typing import Literal
 
-from pydantic import Field
-
 from conduit_sdk.clients import LLMClient
 from conduit_sdk.core.config import ClientConfig
 from conduit_sdk.models.common import Message, MessageRole, Usage
 from conduit_sdk.models.requests import LLMRequest, LLMRequestBuilder, ProviderParams
 from conduit_sdk.models.responses import FinishReason, LLMResponse
-
 
 # ---------------------------------------------------------------------------
 # 1. Declare typed provider-specific parameters

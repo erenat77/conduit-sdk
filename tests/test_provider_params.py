@@ -19,14 +19,11 @@ from pydantic import Field, ValidationError
 from conduit_sdk.models.common import Message
 from conduit_sdk.models.requests import (
     EmbeddingRequest,
-    EmbeddingRequestBuilder,
     ImageGenRequest,
-    ImageGenRequestBuilder,
     LLMRequest,
     LLMRequestBuilder,
     ProviderParams,
 )
-
 
 # ---------------------------------------------------------------------------
 # Shared param groups (defined once, reused across tests)
@@ -125,7 +122,7 @@ OpenAILLMRequest.Builder = OpenAILLMRequestBuilder
 class TestProviderParams:
     def test_subclass_is_frozen(self) -> None:
         params = OpenAIParams()
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             params.reasoning_effort = "low"  # type: ignore[misc]
 
     def test_defaults_applied(self) -> None:
@@ -170,7 +167,7 @@ class TestExtendedRequestConstruction:
 
     def test_extended_request_is_frozen(self) -> None:
         req = OpenAILLMRequest(messages=[Message.user("Hi")])
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             req.reasoning_effort = "low"  # type: ignore[misc]
 
     def test_is_instance_of_base_request(self) -> None:

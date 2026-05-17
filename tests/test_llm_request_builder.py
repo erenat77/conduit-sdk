@@ -7,10 +7,10 @@ All tests are unit tests — no external dependencies required.
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from conduit_sdk.models.common import MessageRole
 from conduit_sdk.models.requests import LLMRequest, LLMRequestBuilder, ToolDefinition
-
 
 # ---------------------------------------------------------------------------
 # Entry point
@@ -223,7 +223,7 @@ def test_top_p_out_of_range_raises() -> None:
 
 def test_built_request_is_frozen() -> None:
     req = LLMRequest.Builder().user("Hello").build()
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         req.max_tokens = 100  # type: ignore[misc]
 
 

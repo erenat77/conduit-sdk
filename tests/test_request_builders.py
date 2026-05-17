@@ -7,6 +7,7 @@ All tests are unit tests — no external dependencies required.
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from conduit_sdk.models.requests import (
     EmbeddingRequest,
@@ -16,7 +17,6 @@ from conduit_sdk.models.requests import (
     VideoGenRequest,
     VideoGenRequestBuilder,
 )
-
 
 # ===========================================================================
 # ImageGenRequestBuilder
@@ -89,7 +89,7 @@ class TestImageGenRequestBuilder:
 
     def test_built_request_is_frozen(self) -> None:
         req = ImageGenRequest.Builder().prompt("X").build()
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             req.prompt = "Y"  # type: ignore[misc]
 
     def test_build_raises_on_empty_prompt(self) -> None:
@@ -175,7 +175,7 @@ class TestVideoGenRequestBuilder:
 
     def test_built_request_is_frozen(self) -> None:
         req = VideoGenRequest.Builder().prompt("X").build()
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             req.prompt = "Y"  # type: ignore[misc]
 
     def test_build_raises_on_empty_prompt(self) -> None:
@@ -263,7 +263,7 @@ class TestEmbeddingRequestBuilder:
 
     def test_built_request_is_frozen(self) -> None:
         req = EmbeddingRequest.Builder().inputs("x").build()
-        with pytest.raises(Exception):
+        with pytest.raises(ValidationError):
             req.inputs = ["y"]  # type: ignore[misc]
 
     def test_build_raises_on_empty_inputs(self) -> None:
