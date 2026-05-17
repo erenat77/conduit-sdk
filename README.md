@@ -43,6 +43,7 @@ pip install llm-conduit
 - [Design Patterns](#design-patterns)
 - [Request & Response Reference](#request--response-reference)
 - [Running Tests](#running-tests)
+- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 
 ---
@@ -854,6 +855,41 @@ All contributions are welcome. The key rule: **new cross-cutting concerns go in 
 **Adding new middleware:** subclass `Middleware`, implement `__call__`, and add tests. Middleware should be stateless where possible (or thread-safe if it holds state).
 
 Please run `pytest` and `ruff check` before opening a PR.
+
+---
+
+## Roadmap
+
+### v0.2 — More Providers
+The biggest value-add right now is provider coverage. Each new provider is ~50 lines implementing `_generate` / `_embed`:
+- **Gemini** (Google) — LLM + embeddings
+- **Groq** — fast LLM inference (Llama, Mixtral)
+- **Mistral** — LLM + embeddings
+- **Cohere** — LLM + embeddings + rerank
+- **Replicate** — image + video (Stable Diffusion, Flux, etc.)
+
+### v0.3 — Resilience & Routing
+- **Fallback chains** — if OpenAI fails, automatically retry with Anthropic
+- **Load balancing** — round-robin across multiple API keys or providers
+- **Budget limits** — hard-stop when session cost exceeds a threshold
+- **Streaming cost estimation** — approximate cost during a stream before usage data is returned
+
+### v0.4 — Observability
+- **OpenTelemetry integration** — traces and spans per call, compatible with Datadog, Jaeger, Honeycomb
+- **Prometheus metrics** — latency histograms, token counters, error rates
+- **Async cost webhooks** — push cost events to an external endpoint
+
+### v0.5 — Developer Experience
+- **Response caching middleware** — skip the API call if the same prompt was seen recently
+- **Token counting** — pre-flight estimate before sending, warn when approaching context limit
+- **Prompt templates** — typed, reusable prompt builders with variable substitution
+- **CLI** — `llm-conduit run --provider openai --model gpt-4o "your prompt"`
+
+### v1.0 — Production Ready
+- Full integration test coverage across all providers
+- Stable public API with semver guarantee
+- Documentation site (MkDocs)
+- Plugin system for community-contributed providers
 
 ---
 
