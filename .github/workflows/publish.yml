@@ -1,0 +1,132 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]   # triggers when you publish a GitHub Release
+
+  # Allow manual trigger for test releases to TestPyPI
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Publish target"
+        required: true
+        default: "testpypi"
+        type: choice
+        options: [testpypi, pypi]
+
+jobs:
+  # ──────────────────────────────────────────────────────────────
+  # Always run the full CI suite before publishing
+  # ──────────────────────────────────────────────────────────────
+  verify:
+    name: Verify before publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project + dev deps
+        run: uv pip install --system -e ".[dev]"
+
+      - name: Lint
+        run: ruff check conduit_sdk tests
+
+      - name: Tests
+        run: pytest tests/ --tb=short -q
+
+  # ──────────────────────────────────────────────────────────────
+  # Build the distribution
+  # ──────────────────────────────────────────────────────────────
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: uv pip install --system build twine
+
+      - name: Build sdist and wheel
+        run: python -m build
+
+      - name: Check distribution
+        run: twine check dist/*
+
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  # ──────────────────────────────────────────────────────────────
+  # Publish to TestPyPI (manual trigger or pre-release)
+  # ──────────────────────────────────────────────────────────────
+  publish-testpypi:
+    name: Publish → TestPyPI
+    runs-on: ubuntu-latest
+    needs: build
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'testpypi') ||
+      (github.event_name == 'release' && github.event.release.prerelease == true)
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/conduit-sdk
+    permissions:
+      id-token: write   # OIDC trusted publishing — no API token needed
+
+    steps:
+      - name: Download distribution
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  # ──────────────────────────────────────────────────────────────
+  # Publish to PyPI (stable releases only)
+  # ──────────────────────────────────────────────────────────────
+  publish-pypi:
+    name: Publish → PyPI
+    runs-on: ubuntu-latest
+    needs: build
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'pypi') ||
+      (github.event_name == 'release' && github.event.release.prerelease == false)
+    environment:
+      name: pypi
+      url: https://pypi.org/p/conduit-sdk
+    permissions:
+      id-token: write   # OIDC trusted publishing — no API token needed
+
+    steps:
+      - name: Download distribution
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

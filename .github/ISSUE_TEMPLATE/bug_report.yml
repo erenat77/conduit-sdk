@@ -1,0 +1,71 @@
+name: Bug Report
+description: Report a bug or unexpected behaviour
+labels: [bug, needs-triage]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the sections below.
+
+  - type: input
+    id: version
+    attributes:
+      label: conduit-sdk version
+      placeholder: "e.g. 0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "e.g. 3.11.8"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: modality
+    attributes:
+      label: Affected modality
+      multiple: true
+      options:
+        - LLMClient
+        - ImageGenClient
+        - VideoGenClient
+        - EmbeddingClient
+        - Middleware (retry / rate-limit / cost / logging)
+        - Registry (ModelRegistry / ProviderRegistry)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Clear description of the bug and what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Smallest possible code snippet that reproduces the issue.
+      render: python
+    validations:
+      required: true
+
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Full traceback / error output
+      render: text
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Provider name, OS, any other relevant details.

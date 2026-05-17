@@ -1,0 +1,51 @@
+name: New Provider Adapter
+description: Request or track a new provider adapter in examples/providers/
+labels: [provider, enhancement]
+assignees: []
+
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider name
+      placeholder: "e.g. Stability AI, Mistral, Kling, ElevenLabs"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: modalities
+    attributes:
+      label: Modalities to support
+      options:
+        - label: LLM (chat completion + streaming)
+        - label: Image generation
+        - label: Video generation
+        - label: Embeddings
+    validations:
+      required: true
+
+  - type: input
+    id: sdk
+    attributes:
+      label: Provider's official Python SDK (if any)
+      placeholder: "e.g. pip install stability-sdk"
+
+  - type: input
+    id: docs
+    attributes:
+      label: API documentation URL
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / quirks
+      description: Anything unusual about this provider's API (auth, async jobs, rate limits, etc.)
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a PR with this adapter.

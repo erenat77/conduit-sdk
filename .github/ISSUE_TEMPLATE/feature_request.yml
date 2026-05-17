@@ -1,0 +1,55 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: [enhancement]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a request, please check that no existing issue covers this.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - New modality client
+        - New middleware
+        - New provider adapter (examples/)
+        - Registry / config
+        - Request / response models
+        - Documentation / examples
+        - CI / tooling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem are you trying to solve? Why does the current SDK not cover it?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How should this work? Include API sketches or pseudocode if helpful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you consider, and why did you rule it out?
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to open a PR for this feature.

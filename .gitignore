@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+wheels/
+sdist/
+var/
+*.manifest
+*.spec
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# Ruff / mypy cache
+.ruff_cache/
+.mypy_cache/
+
+# Distribution / packaging
+*.tar.gz
+*.whl
+MANIFEST
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# uv
+uv.lock
+
+# Secrets — never commit API keys
+.env
+.env.*
+*.env
