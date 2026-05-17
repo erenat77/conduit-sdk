@@ -154,6 +154,11 @@ class CostMiddleware(Middleware):
     async def __call__(self, ctx: CallContext, next_call: NextCall) -> AnyResponse:
         response = await next_call(ctx)
 
+        # Streaming responses are async generators — no usage data available,
+        # so pass them through unchanged without attempting cost calculation.
+        if not hasattr(response, "usage"):
+            return response  # type: ignore[return-value]
+
         cost = self._calculator.calculate(response.usage)
 
         # Pydantic frozen model — rebuild with cost attached

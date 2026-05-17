@@ -97,7 +97,12 @@ class LoggingMiddleware(Middleware):
         self._logger.request_start(ctx, include_body=self._config.include_request_body)
         try:
             response = await next_call(ctx)
-            self._logger.request_end(ctx, response, include_body=self._config.include_response_body)
+            # Streaming responses are async generators — skip structured end-logging
+            # (no usage or cost data available until the stream is fully consumed).
+            if hasattr(response, "usage"):
+                self._logger.request_end(
+                    ctx, response, include_body=self._config.include_response_body
+                )
             return response
         except Exception as exc:
             self._logger.request_error(ctx, exc)
