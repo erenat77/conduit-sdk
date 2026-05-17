@@ -175,9 +175,7 @@ class TestMistralEmbeddingClientUnit:
         mock_sdk.embeddings.create_async = AsyncMock(return_value=mock_resp)
         client._sdk_client = lambda: mock_sdk
 
-        resp = await client.embed(
-            EmbeddingRequest(inputs=["text one", "text two"])
-        )
+        resp = await client.embed(EmbeddingRequest(inputs=["text one", "text two"]))
 
         assert len(resp.embeddings) == 2
         assert len(resp.vectors[0]) == 1024

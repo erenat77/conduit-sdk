@@ -39,9 +39,7 @@ class TestReplicateImageClientUnit:
         mock_sdk.async_run = AsyncMock(return_value=output_urls)
         client._sdk_client = lambda: mock_sdk
 
-        resp = await client.generate(
-            ImageGenRequest(prompt="A red fox in the snow")
-        )
+        resp = await client.generate(ImageGenRequest(prompt="A red fox in the snow"))
 
         assert len(resp.images) == 1
         assert resp.images[0].url == output_urls[0]
@@ -139,9 +137,7 @@ class TestReplicateVideoClientUnit:
         mock_sdk.async_run = AsyncMock(return_value=output_urls)
         client._sdk_client = lambda: mock_sdk
 
-        resp = await client.generate(
-            VideoGenRequest(prompt="A drone shot of mountains")
-        )
+        resp = await client.generate(VideoGenRequest(prompt="A drone shot of mountains"))
 
         assert len(resp.videos) == 1
         assert resp.videos[0].url == output_urls[0]

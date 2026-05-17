@@ -73,9 +73,7 @@ class TestGeminiLLMClientUnit:
         mock_sdk_client.aio.models.generate_content = AsyncMock(return_value=mock_resp)
         client._sdk_client = lambda: mock_sdk_client
 
-        resp = await client.generate(
-            LLMRequest(messages=[Message.user("Explain attention.")])
-        )
+        resp = await client.generate(LLMRequest(messages=[Message.user("Explain attention.")]))
 
         assert resp.content == "Attention is all you need."
         assert resp.provider == "gemini"
@@ -154,9 +152,7 @@ class TestGeminiLLMClientUnit:
 
         client = _llm_client()
         mock_sdk_client = MagicMock()
-        mock_sdk_client.aio.models.generate_content_stream = AsyncMock(
-            return_value=_async_gen()
-        )
+        mock_sdk_client.aio.models.generate_content_stream = AsyncMock(return_value=_async_gen())
         client._sdk_client = lambda: mock_sdk_client
 
         collected = []
@@ -192,9 +188,7 @@ class TestGeminiEmbeddingClientUnit:
         mock_sdk_client.aio.models.embed_content = AsyncMock(return_value=mock_resp)
         client._sdk_client = lambda: mock_sdk_client
 
-        resp = await client.embed(
-            EmbeddingRequest(inputs=["Hello world", "Goodbye world"])
-        )
+        resp = await client.embed(EmbeddingRequest(inputs=["Hello world", "Goodbye world"]))
 
         assert len(resp.embeddings) == 2
         assert len(resp.vectors[0]) == 768

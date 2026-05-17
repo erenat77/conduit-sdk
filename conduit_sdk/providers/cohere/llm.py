@@ -154,9 +154,7 @@ class CohereLLMClient(LLMClient):
         content_blocks = raw.message.content if raw.message else []
         content = ""
         if content_blocks:
-            content = " ".join(
-                b.text if hasattr(b, "text") else str(b) for b in content_blocks
-            )
+            content = " ".join(b.text if hasattr(b, "text") else str(b) for b in content_blocks)
 
         finish_raw = str(raw.finish_reason).split(".")[-1] if raw.finish_reason else None
 

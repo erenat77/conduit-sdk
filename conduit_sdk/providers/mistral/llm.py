@@ -129,9 +129,7 @@ class MistralLLMClient(LLMClient):
         if request.top_p is not None:
             kwargs["top_p"] = request.top_p
         if request.stop:
-            kwargs["stop"] = (
-                request.stop if isinstance(request.stop, list) else [request.stop]
-            )
+            kwargs["stop"] = request.stop if isinstance(request.stop, list) else [request.stop]
         kwargs.update(request.extra)
         return kwargs
 
@@ -144,9 +142,7 @@ class MistralLLMClient(LLMClient):
         choice = raw.choices[0]
         content = choice.message.content or ""
         if isinstance(content, list):  # content blocks
-            content = " ".join(
-                c.text if hasattr(c, "text") else str(c) for c in content
-            )
+            content = " ".join(c.text if hasattr(c, "text") else str(c) for c in content)
 
         finish_raw = (
             str(choice.finish_reason).split(".")[-1].lower() if choice.finish_reason else None

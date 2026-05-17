@@ -84,9 +84,7 @@ class GeminiEmbeddingClient(EmbeddingClient):
         vectors = [e.values for e in raw.embeddings]
 
         return EmbeddingResponse(
-            embeddings=[
-                Embedding(index=i, vector=v) for i, v in enumerate(vectors)
-            ],
+            embeddings=[Embedding(index=i, vector=v) for i, v in enumerate(vectors)],
             usage=Usage(
                 prompt_tokens=0,
                 total_tokens=0,
