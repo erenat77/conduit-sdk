@@ -160,13 +160,7 @@ def test_with_extra() -> None:
 
 
 def test_with_extra_merges_multiple_calls() -> None:
-    req = (
-        LLMRequest.Builder()
-        .user("Hi")
-        .with_extra(seed=42)
-        .with_extra(logprobs=True)
-        .build()
-    )
+    req = LLMRequest.Builder().user("Hi").with_extra(seed=42).with_extra(logprobs=True).build()
     assert req.extra["seed"] == 42
     assert req.extra["logprobs"] is True
 

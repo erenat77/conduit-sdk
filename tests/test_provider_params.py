@@ -215,11 +215,7 @@ class TestExtendedRequestConstruction:
 
 class TestExtendedBuilder:
     def test_builder_returns_extended_type(self) -> None:
-        req = (
-            OpenAILLMRequestBuilder()
-            .user("Hi")
-            .build()
-        )
+        req = OpenAILLMRequestBuilder().user("Hi").build()
         assert isinstance(req, OpenAILLMRequest)
         assert isinstance(req, LLMRequest)
 

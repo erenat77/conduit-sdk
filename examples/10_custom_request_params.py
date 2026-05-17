@@ -25,6 +25,7 @@ from conduit_sdk.models.responses import FinishReason, LLMResponse
 # 1. Declare typed provider-specific parameters
 # ---------------------------------------------------------------------------
 
+
 class OpenAIParams(ProviderParams):
     """
     OpenAI-specific parameters not covered by the standard LLMRequest schema.
@@ -32,6 +33,7 @@ class OpenAIParams(ProviderParams):
     Every field must have a default value — these params are optional
     extensions on top of the base request.
     """
+
     reasoning_effort: Literal["low", "medium", "high"] = "medium"
     parallel_tool_calls: bool = True
     logprobs: bool = False
@@ -42,14 +44,17 @@ class OpenAIParams(ProviderParams):
 # 2. Mix into any base request class
 # ---------------------------------------------------------------------------
 
+
 class OpenAILLMRequest(LLMRequest, OpenAIParams):
     """LLMRequest extended with typed OpenAI parameters."""
+
     pass
 
 
 # ---------------------------------------------------------------------------
 # 3. Extend the matching builder to return the custom type
 # ---------------------------------------------------------------------------
+
 
 class OpenAILLMRequestBuilder(LLMRequestBuilder):
     """
@@ -110,12 +115,10 @@ OpenAILLMRequest.Builder = OpenAILLMRequestBuilder
 # 5. Mock client that prints the custom params to show they're passed through
 # ---------------------------------------------------------------------------
 
-class MockOpenAIClient(LLMClient):
 
+class MockOpenAIClient(LLMClient):
     async def _generate(self, request: LLMRequest) -> LLMResponse:
-        last = next(
-            m.content for m in reversed(request.messages) if m.role == MessageRole.USER
-        )
+        last = next(m.content for m in reversed(request.messages) if m.role == MessageRole.USER)
         # The provider adapter can read typed fields if the request is extended
         effort = getattr(request, "reasoning_effort", "n/a")
         logprobs = getattr(request, "logprobs", False)
@@ -140,6 +143,7 @@ client = MockOpenAIClient(config=ClientConfig(provider="openai", model="o3-mini"
 # ---------------------------------------------------------------------------
 # 6. Demo
 # ---------------------------------------------------------------------------
+
 
 async def main() -> None:
     print("=" * 60)
@@ -172,7 +176,7 @@ async def main() -> None:
         .build()
     )
     assert isinstance(req2, OpenAILLMRequest)
-    assert isinstance(req2, LLMRequest)          # still a base LLMRequest
+    assert isinstance(req2, LLMRequest)  # still a base LLMRequest
     assert req2.reasoning_effort == "high"
     assert req2.logprobs is True
     r2 = await client.generate(req2)
