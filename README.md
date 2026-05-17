@@ -1,7 +1,7 @@
 # llm-conduit
 
 [![CI](https://github.com/erenat77/llm-conduit/actions/workflows/ci.yml/badge.svg)](https://github.com/erenat77/llm-conduit/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/llm-conduit.svg)](https://badge.fury.io/py/llm-conduit)
+[![PyPI version](https://img.shields.io/pypi/v/llm-conduit.svg)](https://pypi.org/project/llm-conduit/)
 [![Python](https://img.shields.io/pypi/pyversions/llm-conduit.svg)](https://pypi.org/project/llm-conduit/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
