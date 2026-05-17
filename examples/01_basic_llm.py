@@ -3,7 +3,7 @@ Example 01 — Basic LLM chat completion
 =======================================
 Shows:
   - Implementing a minimal LLMClient subclass (mock provider)
-  - Building a multi-turn conversation
+  - Building a multi-turn conversation (direct construction and fluent builder)
   - Async generate() and its sync wrapper
   - Accessing response fields: content, usage, finish_reason
 """
@@ -16,7 +16,7 @@ from collections.abc import AsyncIterator
 from conduit_sdk.clients import LLMClient
 from conduit_sdk.core.config import ClientConfig, CostConfig
 from conduit_sdk.models.common import Message, MessageRole, Usage
-from conduit_sdk.models.requests import LLMRequest
+from conduit_sdk.models.requests import LLMRequest, LLMRequestBuilder
 from conduit_sdk.models.responses import FinishReason, LLMResponse
 
 # ---------------------------------------------------------------------------
@@ -83,12 +83,11 @@ async def main() -> None:
     print("Example 01 — Basic LLM Chat")
     print("=" * 55)
 
-    # Build a conversation
+    # ── Option A: classic keyword-argument construction ──────────────────────
     messages = [
         Message.system("You are a concise, helpful assistant."),
         Message.user("What is the capital of France?"),
     ]
-
     request = LLMRequest(messages=messages, max_tokens=200, temperature=0.7)
     response = await client.generate(request)
 
@@ -101,12 +100,26 @@ async def main() -> None:
     if response.cost:
         print(f"Estimated cost: ${response.cost.total_cost:.6f} USD")
 
-    # Continue the conversation (multi-turn)
+    # ── Option B: fluent builder (LLMRequest.Builder()) ────────────────────────
+    print("\n--- Fluent builder ---")
+    builder_request = (
+        LLMRequest.Builder()
+        .system("You are a concise, helpful assistant.")
+        .user("Name three programming languages invented before 1980.")
+        .max_tokens(100)
+        .temperature(0.3)
+        .build()
+    )
+    builder_response = await client.generate(builder_request)
+    print(f"Builder response: {builder_response.content}")
+
+    # ── Multi-turn continuation ──────────────────────────────────────────────
+    print("\n--- Multi-turn follow-up ---")
     messages.append(Message.assistant(response.content))
     messages.append(Message.user("And what is the population of that city?"))
 
     follow_up = await client.generate(LLMRequest(messages=messages))
-    print(f"\nFollow-up: {follow_up.content}")
+    print(f"Follow-up: {follow_up.content}")
 
 
 if __name__ == "__main__":
@@ -114,5 +127,6 @@ if __name__ == "__main__":
 
     # Synchronous wrapper — must be called OUTSIDE an event loop
     print("\n--- Sync call (top-level, no event loop) ---")
-    sync_response = client.generate_sync(LLMRequest(messages=[Message.user("Tell me a fun fact.")]))
+    sync_request = LLMRequest.Builder().user("Tell me a fun fact.").max_tokens(80).build()
+    sync_response = client.generate_sync(sync_request)
     print(f"Sync response: {sync_response.content}")
