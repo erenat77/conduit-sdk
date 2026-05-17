@@ -27,22 +27,33 @@ _SKIP_MESSAGES = (
 )
 
 
-@pytest.fixture(autouse=True)
-def skip_on_billing_error(request: pytest.FixtureRequest):
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item: pytest.Item, call: pytest.CallInfo) -> None:  # type: ignore[return]
     """
-    If an integration test fails because the API account has no credits,
-    convert the failure to a skip instead of a hard failure so CI stays green.
+    Convert integration test failures caused by billing/quota errors into skips.
+    pytest-asyncio in AUTO mode doesn't propagate async exceptions through sync
+    fixtures, so we hook at the report level instead.
     """
-    if not request.node.get_closest_marker("integration"):
-        yield
+    outcome = yield
+    rep = outcome.get_result()
+
+    if rep.when != "call" or not rep.failed:
+        return
+    if not item.get_closest_marker("integration"):
         return
 
-    try:
-        yield
-    except Exception as exc:
-        msg = str(exc).lower()
-        if any(phrase in msg for phrase in _SKIP_MESSAGES):
-            pytest.skip(f"Skipped — billing limit reached: {exc}")
+    excinfo = call.excinfo
+    if excinfo is None:
+        return
+
+    msg = str(excinfo.value).lower()
+    if any(phrase in msg for phrase in _SKIP_MESSAGES):
+        rep.outcome = "skipped"
+        rep.longrepr = (
+            str(item.fspath),
+            item.location[1],
+            f"Skipped: billing limit reached — {excinfo.value}",
+        )
         raise
 
 
