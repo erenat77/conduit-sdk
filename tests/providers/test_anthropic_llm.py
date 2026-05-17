@@ -462,7 +462,7 @@ class TestAnthropicLLMClientUnit:
         try:
             from conduit_sdk.providers.anthropic.llm import _require_anthropic
 
-            with pytest.raises(ImportError, match="pip install conduit-sdk\\[anthropic\\]"):
+            with pytest.raises(ImportError, match="pip install llm-conduit\\[anthropic\\]"):
                 _require_anthropic()
         finally:
             if real_module is not None:

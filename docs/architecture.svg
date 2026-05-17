@@ -4,7 +4,7 @@
   <rect width="860" height="720" fill="#0f1117" rx="12"/>
 
   <!-- ── Title ───────────────────────────────────────────── -->
-  <text x="430" y="38" text-anchor="middle" fill="#e2e8f0" font-size="18" font-weight="700" letter-spacing="0.5">conduit-sdk  ·  Architecture Overview</text>
+  <text x="430" y="38" text-anchor="middle" fill="#e2e8f0" font-size="18" font-weight="700" letter-spacing="0.5">llm-conduit  ·  Architecture Overview</text>
 
   <!-- ═══════════════════════════════════════════════════════
        LAYER 1 — Your Application

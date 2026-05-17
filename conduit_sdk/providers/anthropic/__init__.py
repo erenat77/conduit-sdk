@@ -1,5 +1,5 @@
 """
-Anthropic provider — pip install conduit-sdk[anthropic]
+Anthropic provider — pip install llm-conduit[anthropic]
 
 Exposes one client:
 

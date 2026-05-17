@@ -4,7 +4,7 @@ Built-in provider adapters.
 Each provider lives in its own sub-package and is available as an optional
 install extra so that users only pull in the SDKs they actually need.
 
-    pip install conduit-sdk[openai]
+    pip install llm-conduit[openai]
 
 Then import:
 

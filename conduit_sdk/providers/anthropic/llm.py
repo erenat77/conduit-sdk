@@ -48,7 +48,7 @@ def _require_anthropic() -> anthropic:
     except ImportError:
         raise ImportError(
             "Anthropic provider requires the anthropic package. "
-            "Install it with: pip install conduit-sdk[anthropic]"
+            "Install it with: pip install llm-conduit[anthropic]"
         ) from None
 
 

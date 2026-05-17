@@ -19,7 +19,7 @@ All examples use **mock providers** — no API keys or external services require
 ## Running
 
 ```bash
-cd conduit-sdk/
+cd conduit-sdk/  # repo folder
 pip install -e ".[dev]"
 
 # Run any example

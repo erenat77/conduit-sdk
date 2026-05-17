@@ -1,12 +1,12 @@
-# Contributing to conduit-sdk
+# Contributing to llm-conduit
 
 Thank you for your interest in contributing. This guide covers everything you need to get started.
 
 ## Development setup
 
 ```bash
-git clone https://github.com/your-org/conduit-sdk
-cd conduit-sdk
+git clone https://github.com/your-org/llm-conduit
+cd llm-conduit
 
 # Install uv (fast Python package manager)
 pip install uv

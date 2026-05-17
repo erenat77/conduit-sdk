@@ -44,5 +44,5 @@ Initial release.
 - GitHub Actions: CI (lint + typecheck + test matrix × 3.10/3.11/3.12 + examples smoke test), publish (PyPI + TestPyPI via OIDC), CodeQL security scan
 - `CONTRIBUTING.md`, PR template, bug/feature/provider issue templates
 
-[Unreleased]: https://github.com/your-org/conduit-sdk/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/your-org/conduit-sdk/releases/tag/v0.1.0
+[Unreleased]: https://github.com/erenat77/llm-conduit/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/erenat77/llm-conduit/releases/tag/v0.1.0

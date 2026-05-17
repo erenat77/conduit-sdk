@@ -2,8 +2,8 @@ blank_issues_enabled: false
 
 contact_links:
   - name: Documentation
-    url: https://github.com/your-org/conduit-sdk#readme
+    url: https://github.com/your-org/llm-conduit#readme
     about: Read the README and examples/ before opening an issue.
   - name: Discussions
-    url: https://github.com/your-org/conduit-sdk/discussions
+    url: https://github.com/your-org/llm-conduit/discussions
     about: Ask questions and share ideas in Discussions.

@@ -38,7 +38,7 @@ def _require_openai() -> openai:
     except ImportError:
         raise ImportError(
             "OpenAI provider requires the openai package. "
-            "Install it with: pip install conduit-sdk[openai]"
+            "Install it with: pip install llm-conduit[openai]"
         ) from None
 
 

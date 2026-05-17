@@ -89,7 +89,7 @@ jobs:
       (github.event_name == 'release' && github.event.release.prerelease == true)
     environment:
       name: testpypi
-      url: https://test.pypi.org/p/conduit-sdk
+      url: https://test.pypi.org/p/llm-conduit
     permissions:
       id-token: write   # OIDC trusted publishing — no API token needed
 
@@ -117,7 +117,7 @@ jobs:
       (github.event_name == 'release' && github.event.release.prerelease == false)
     environment:
       name: pypi
-      url: https://pypi.org/p/conduit-sdk
+      url: https://pypi.org/p/llm-conduit
     permissions:
       id-token: write   # OIDC trusted publishing — no API token needed
 

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "conduit-sdk"
+name = "llm-conduit"
 version = "0.1.0"
 description = "A provider-agnostic SDK for LLM, image, video, and embedding model clients"
 readme = "README.md"
@@ -35,7 +35,7 @@ dev = [
     "mypy>=1.10",
     "pytest-cov>=5.0",
 ]
-all = ["conduit-sdk[openai,anthropic]"]
+all = ["llm-conduit[openai,anthropic]"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["conduit_sdk"]

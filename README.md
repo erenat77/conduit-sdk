@@ -1,24 +1,24 @@
-# conduit-sdk
+# llm-conduit
 
-[![CI](https://github.com/your-org/conduit-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/conduit-sdk/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/conduit-sdk.svg)](https://badge.fury.io/py/conduit-sdk)
-[![Python](https://img.shields.io/pypi/pyversions/conduit-sdk.svg)](https://pypi.org/project/conduit-sdk/)
+[![CI](https://github.com/erenat77/llm-conduit/actions/workflows/ci.yml/badge.svg)](https://github.com/erenat77/llm-conduit/actions/workflows/ci.yml)
+[![PyPI version](https://badge.fury.io/py/llm-conduit.svg)](https://badge.fury.io/py/llm-conduit)
+[![Python](https://img.shields.io/pypi/pyversions/llm-conduit.svg)](https://pypi.org/project/llm-conduit/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 A generic, provider-agnostic Python SDK for building AI model clients across four modalities: **LLM**, **image generation**, **video generation**, and **embeddings**.
 
-`conduit-sdk` is designed to be a **foundational package**. It defines clean interfaces, shared request/response schemas, and a full middleware stack — so you can write a thin provider adapter and immediately get retry logic, rate limiting, cost tracking, and structured logging for free.
+`llm-conduit` is designed to be a **foundational package**. It defines clean interfaces, shared request/response schemas, and a full middleware stack — so you can write a thin provider adapter and immediately get retry logic, rate limiting, cost tracking, and structured logging for free.
 
 ```
-pip install conduit-sdk
+pip install llm-conduit
 ```
 
 ---
 
 ## Table of Contents
 
-- [Why conduit-sdk?](#why-conduit-sdk)
+- [Why llm-conduit?](#why-llm-conduit)
 - [Architecture Overview](#architecture-overview)
 - [Installation](#installation)
 - [Quickstart](#quickstart)
@@ -47,11 +47,11 @@ pip install conduit-sdk
 
 ---
 
-## Why conduit-sdk?
+## Why llm-conduit?
 
 Every AI provider has its own SDK, its own request shape, and its own error semantics. When you build on top of multiple providers — or want to swap one for another — you end up duplicating retry loops, rate-limit handling, and cost math across every integration.
 
-`conduit-sdk` fixes this by giving you:
+`llm-conduit` fixes this by giving you:
 
 - **Stable, typed interfaces** for every modality — your application code stays the same regardless of which provider is underneath.
 - **A middleware pipeline** for cross-cutting concerns that runs automatically on every call, with zero boilerplate in your provider adapter.
@@ -62,7 +62,7 @@ Every AI provider has its own SDK, its own request shape, and its own error sema
 
 ## Architecture Overview
 
-![conduit-sdk architecture](docs/architecture.svg)
+![llm-conduit architecture](docs/architecture.svg)
 
 The SDK is organized in five layers, each with a single responsibility:
 
@@ -83,7 +83,7 @@ All shared concerns live in the pipeline. Your adapter implements exactly one or
 ## Installation
 
 ```bash
-pip install conduit-sdk
+pip install llm-conduit
 ```
 
 **Python 3.11+ recommended** (3.10 supported). Dependencies: `pydantic>=2.7`, `tenacity>=8.3`, `anyio>=4.4`.
@@ -91,8 +91,8 @@ pip install conduit-sdk
 For development:
 
 ```bash
-git clone https://github.com/your-org/conduit-sdk
-cd conduit-sdk
+git clone https://github.com/erenat77/llm-conduit
+cd llm-conduit
 pip install -e ".[dev]"
 ```
 

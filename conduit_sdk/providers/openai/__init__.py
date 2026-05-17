@@ -1,5 +1,5 @@
 """
-OpenAI provider — pip install conduit-sdk[openai]
+OpenAI provider — pip install llm-conduit[openai]
 
 Exposes three clients that implement the conduit_sdk abstract interfaces:
 

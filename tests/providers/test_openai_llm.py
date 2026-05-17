@@ -243,7 +243,7 @@ class TestOpenAILLMClientUnit:
         monkeypatch.setattr(builtins, "__import__", mock_import)
         from conduit_sdk.providers.openai.llm import _require_openai
 
-        with pytest.raises(ImportError, match="pip install conduit-sdk\\[openai\\]"):
+        with pytest.raises(ImportError, match="pip install llm-conduit\\[openai\\]"):
             _require_openai()
 
     @pytest.mark.asyncio
