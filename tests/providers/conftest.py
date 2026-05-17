@@ -16,6 +16,35 @@ import pytest
 from conduit_sdk.core.config import ClientConfig, CostConfig
 from conduit_sdk.core.middleware import MiddlewarePipeline
 
+# ──────────────────────────────────────────────────────────────
+# Auto-skip integration tests on known billing / quota errors
+# ──────────────────────────────────────────────────────────────
+_SKIP_MESSAGES = (
+    "credit balance is too low",
+    "insufficient_quota",
+    "exceeded your current quota",
+    "billing_hard_limit_reached",
+)
+
+
+@pytest.fixture(autouse=True)
+def skip_on_billing_error(request: pytest.FixtureRequest):
+    """
+    If an integration test fails because the API account has no credits,
+    convert the failure to a skip instead of a hard failure so CI stays green.
+    """
+    if not request.node.get_closest_marker("integration"):
+        yield
+        return
+
+    try:
+        yield
+    except Exception as exc:
+        msg = str(exc).lower()
+        if any(phrase in msg for phrase in _SKIP_MESSAGES):
+            pytest.skip(f"Skipped — billing limit reached: {exc}")
+        raise
+
 
 def openai_config(model: str = "gpt-4o") -> ClientConfig:
     return ClientConfig(
