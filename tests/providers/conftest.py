@@ -54,7 +54,6 @@ def pytest_runtest_makereport(item: pytest.Item, call: pytest.CallInfo) -> None:
             item.location[1],
             f"Skipped: billing limit reached — {excinfo.value}",
         )
-        raise
 
 
 def openai_config(model: str = "gpt-4o") -> ClientConfig:
