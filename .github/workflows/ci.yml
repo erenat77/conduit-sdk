@@ -155,6 +155,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    continue-on-error: true  # results are informational — don't block CI
 
     steps:
       - uses: actions/checkout@v4
@@ -193,6 +194,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    continue-on-error: true  # results are informational — don't block CI
 
     steps:
       - uses: actions/checkout@v4
