@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "llm-conduit"
-version = "0.1.3"
+version = "0.2.0"
 description = "A provider-agnostic SDK for LLM, image, video, and embedding model clients"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -27,6 +27,11 @@ dependencies = [
 [project.optional-dependencies]
 openai = ["openai>=1.30"]
 anthropic = ["anthropic>=0.25"]
+groq = ["groq>=0.9"]
+gemini = ["google-genai>=1.0"]
+mistral = ["mistralai>=1.0"]
+cohere = ["cohere>=5.0"]
+replicate = ["replicate>=0.30"]
 dev = [
     "pytest>=8.2",
     "pytest-asyncio>=0.23",
@@ -35,8 +40,9 @@ dev = [
     "ruff>=0.4",
     "mypy>=1.10",
     "pytest-cov>=5.0",
+    "respx>=0.21",
 ]
-all = ["llm-conduit[openai,anthropic]"]
+all = ["llm-conduit[openai,anthropic,groq,gemini,mistral,cohere,replicate]"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["conduit_sdk"]
